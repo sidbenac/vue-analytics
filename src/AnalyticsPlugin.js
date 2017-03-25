@@ -7,8 +7,23 @@ export default class AnalyticsPlugin {
   trackView (screenName) {
     logDebug('Dispatching TrackView', { screenName })
 
-    ga('set', 'screenName', screenName)
-    ga('send', 'screenview')
+    ga('set', 'page', screenName)
+    ga('send', 'pageview')
+    ga('ec:addProduct', {               // Provide product details in an productFieldObject.
+  'id': 'P12345',                   // Product ID (string).
+  'name': 'Android Warhol T-Shirt', // Product name (string).
+  'category': 'Apparel',            // Product category (string).
+  'brand': 'Google',                // Product brand (string).
+  'variant': 'black',               // Product variant (string).
+  'price': '29.20',                 // Product price (currency).
+  'quantity': 1                     // Product quantity (number).
+});
+
+// Add the step number and additional info about the checkout to the action.
+ga('ec:setAction','checkout', {
+    'step': 1,
+    'option': 'Visa'
+});
   }
 
   /**
@@ -24,6 +39,20 @@ export default class AnalyticsPlugin {
     logDebug('Dispatching event', { category, action, label, value })
 
     ga('send', 'event', category, action, label, value)
+   
+   // (On "Next" button click)
+
+ga('ec:setAction', 'purchase', {          // Transaction details are provided in an actionFieldObject.
+  'id': 'T12345',                         // (Required) Transaction id (string).
+  'affiliation': 'Google Store - Online', // Affiliation (string).
+  'revenue': '42.39',                     // Revenue (currency).
+  'tax': '2.85',                          // Tax (currency).
+  'shipping': '5.34',                     // Shipping (currency).
+  'coupon': 'SUMMER2013',
+  'step':2                  // Transaction coupon (string).
+});
+ga('send', 'pageview');     // Send transaction data with initial pageview.
+
   }
 
   /**

@@ -35,11 +35,11 @@ const install = function (Vue, initConf = {}) {
   ga('create', initConf.trackingId, 'auto', {
     transport: 'beacon',
   })
+ga('require', 'ec');
 
   // set app name and version
-  ga('set', 'appName', initConf.appName)
-  ga('set', 'appVersion', initConf.appVersion)
-
+  //ga('set', 'appName', initConf.appName)
+  //ga('set', 'appVersion', initConf.appVersion)
   // Inject global dimensions
   if (initConf.globalDimensions) {
     initConf.globalDimensions.forEach(dimension => {
